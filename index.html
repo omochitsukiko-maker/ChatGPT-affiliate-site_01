@@ -1,18 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>副業ブログ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>副業で月5万円を目指すブログ</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f5f7fa;
+  color: #333;
+}
+
+header {
+  background: #1e88e5;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 15px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+h1,h2 {
+  margin-top: 0;
+}
+
+.button {
+  display: inline-block;
+  padding: 12px 20px;
+  background: #ff7043;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 12px;
+  color: #777;
+}
+</style>
+
 </head>
 <body>
 
-<h1>副業ブログ</h1>
+<header>
+  <h1>副業で月5万円を目指すブログ</h1>
+  <p>初心者でもできる副業・AI活用術を解説</p>
+</header>
 
-<p>記事一覧</p>
+<div class="container">
 
-<ul>
-<li><a href="article-xxxxx.html">記事1</a></li>
-</ul>
+  <div class="card">
+    <h2>🔥 今すぐ始める副業</h2>
+    <p>初心者でもすぐに収益化できる方法をまとめました。</p>
+
+    <a class="button" href="https://px.a8.net/svt/ejp?a8mat=XXXXXXX">
+      無料で副業を始める
+    </a>
+  </div>
+
+  <div class="card">
+    <h2>📝 最新記事</h2>
+
+    <ul id="article-list">
+      <li>記事を読み込み中...</li>
+    </ul>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  © 副業ブログ
+</div>
+
+<script>
+fetch("https://api.github.com/repos/omochitsukiko-maker/ChatGPT-affiliate-site_01/contents/")
+.then(res => res.json())
+.then(data => {
+
+  const list = document.getElementById("article-list");
+  list.innerHTML = "";
+
+  data.forEach(file => {
+    if(file.name.startsWith("article-")) {
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="${file.name}">${file.name}</a>`;
+      list.appendChild(li);
+    }
+  });
+
+});
+</script>
 
 </body>
 </html>
