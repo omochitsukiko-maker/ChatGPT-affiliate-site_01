@@ -3,109 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>副業で月5万円を目指すブログ</title>
-
+<title>副業で月5万円を目指すメディア</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f5f7fa;
-  color: #333;
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fa;
+  color:#333;
 }
-
-header {
-  background: #1e88e5;
-  color: white;
-  padding: 20px;
-  text-align: center;
+header{
+  background:#1e88e5;
+  color:#fff;
+  padding:30px 20px;
+  text-align:center;
 }
-
-.container {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 15px;
+.container{
+  max-width:1000px;
+  margin:30px auto;
+  padding:20px;
 }
-
-.card {
-  background: white;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:20px;
 }
-
-h1,h2 {
-  margin-top: 0;
+.card{
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  padding:20px;
 }
-
-.button {
-  display: inline-block;
-  padding: 12px 20px;
-  background: #ff7043;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  margin-top: 10px;
+.card h2{
+  margin-top:0;
+  font-size:20px;
 }
-
-.footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 12px;
-  color: #777;
+.card a{
+  text-decoration:none;
+  color:#1e88e5;
+  font-weight:bold;
+}
+.cta{
+  margin:30px 0;
+  text-align:center;
+}
+.button{
+  display:inline-block;
+  padding:14px 24px;
+  background:#ff7043;
+  color:#fff;
+  text-decoration:none;
+  border-radius:8px;
+}
+footer{
+  text-align:center;
+  padding:30px;
+  color:#777;
 }
 </style>
-
 </head>
 <body>
 
 <header>
-  <h1>副業で月5万円を目指すブログ</h1>
-  <p>初心者でもできる副業・AI活用術を解説</p>
+  <h1>副業で月5万円を目指すメディア</h1>
+  <p>AI活用・ブログ・副業ノウハウを初心者向けに解説</p>
 </header>
 
 <div class="container">
 
-  <div class="card">
-    <h2>🔥 今すぐ始める副業</h2>
-    <p>初心者でもすぐに収益化できる方法をまとめました。</p>
-
-    <a class="button" href="https://px.a8.net/svt/ejp?a8mat=XXXXXXX">
+  <div class="cta">
+    <a class="button" href="あなたのアフィリエイトリンク">
       無料で副業を始める
     </a>
   </div>
 
-  <div class="card">
-    <h2>📝 最新記事</h2>
-
-    <ul id="article-list">
-      <li>記事を読み込み中...</li>
-    </ul>
-
+  <div class="grid" id="article-list">
+    <div class="card">記事を読み込み中...</div>
   </div>
 
 </div>
 
-<div class="footer">
-  © 副業ブログ
-</div>
+<footer>
+  © 2026 副業メディア
+</footer>
 
 <script>
-fetch("https://api.github.com/repos/omochitsukiko-maker/ChatGPT-affiliate-site_01/contents/")
+fetch("./articles.json")
 .then(res => res.json())
 .then(data => {
+  const container = document.getElementById("article-list");
+  container.innerHTML = "";
 
-  const list = document.getElementById("article-list");
-  list.innerHTML = "";
-
-  data.forEach(file => {
-    if(file.name.startsWith("article-")) {
-      const li = document.createElement("li");
-      li.innerHTML = `<a href="${file.name}">${file.name}</a>`;
-      list.appendChild(li);
-    }
+  data.reverse().forEach(article => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `
+      <h2>${article.title}</h2>
+      <p>${article.summary}</p>
+      <a href="article.html?id=${article.id}">続きを読む →</a>
+    `;
+    container.appendChild(div);
   });
-
 });
 </script>
 
