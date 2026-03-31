@@ -1,48 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI副業メディア</title>
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fa;
+  color:#333;
+}
+header{
+  background:#1e88e5;
+  color:#fff;
+  padding:30px 20px;
+  text-align:center;
+}
+.container{
+  max-width:1000px;
+  margin:30px auto;
+  padding:20px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:20px;
+}
+.card{
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  padding:20px;
+}
+.card h2{
+  margin-top:0;
+}
+.card a{
+  text-decoration:none;
+  color:#1e88e5;
+  font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AI副業メディア</h1>
+  <p>月5万円を目指す副業ノウハウサイト</p>
+</header>
+
+<div class="container">
+  <div class="grid" id="article-list">
+    <div class="card">記事を読み込み中...</div>
+  </div>
+</div>
+
 <script>
 async function loadArticles() {
   const container = document.getElementById("article-list");
 
   try {
-    const res = await fetch("/articles.json?t=" + Date.now(), {
-      cache: "no-store"
-    });
+    const res = await fetch("/articles.json?t=" + Date.now());
 
     if (!res.ok) {
-      throw new Error("articles.json の取得に失敗しました");
+      throw new Error("JSON取得失敗");
     }
 
     const data = await res.json();
 
     container.innerHTML = "";
 
-    if (!Array.isArray(data) || data.length === 0) {
-      container.innerHTML = "<div class='card'>まだ記事がありません</div>";
+    if (!Array.isArray(data)) {
+      container.innerHTML = "<div class='card'>記事データ形式エラー</div>";
       return;
     }
 
-    data.slice().reverse().forEach(article => {
+    data.reverse().forEach(function(article) {
       const div = document.createElement("div");
       div.className = "card";
 
-      div.innerHTML = `
-        <h2>${article.title || "無題の記事"}</h2>
-        <p>${article.summary || "記事概要はありません"}</p>
-        <a href="/article.html?id=${article.id}">続きを読む →</a>
-      `;
+      div.innerHTML =
+        "<h2>" + (article.title || "無題") + "</h2>" +
+        "<p>" + (article.summary || "概要なし") + "</p>" +
+        "<a href='/article.html?id=" + article.id + "'>続きを読む →</a>";
 
       container.appendChild(div);
     });
 
-  } catch (error) {
-    container.innerHTML = `
-      <div class="card">
-        記事読み込みエラー<br>
-        ${error.message}
-      </div>
-    `;
-    console.error(error);
+  } catch (e) {
+    container.innerHTML =
+      "<div class='card'>エラー: " + e.message + "</div>";
   }
 }
 
-document.addEventListener("DOMContentLoaded", loadArticles);
+window.onload = loadArticles;
 </script>
+
+</body>
+</html>
