@@ -8,7 +8,7 @@ async function loadArticles() {
     });
 
     if (!res.ok) {
-      throw new Error("articles.json 読み込み失敗");
+      throw new Error("articles.json の取得に失敗しました");
     }
 
     const data = await res.json();
@@ -16,7 +16,7 @@ async function loadArticles() {
     container.innerHTML = "";
 
     if (!Array.isArray(data) || data.length === 0) {
-      container.innerHTML = "<div class='card'>記事がまだありません</div>";
+      container.innerHTML = "<div class='card'>まだ記事がありません</div>";
       return;
     }
 
@@ -25,8 +25,8 @@ async function loadArticles() {
       div.className = "card";
 
       div.innerHTML = `
-        <h2>${article.title}</h2>
-        <p>${article.summary}</p>
+        <h2>${article.title || "無題の記事"}</h2>
+        <p>${article.summary || "記事概要はありません"}</p>
         <a href="/article.html?id=${article.id}">続きを読む →</a>
       `;
 
@@ -44,5 +44,5 @@ async function loadArticles() {
   }
 }
 
-loadArticles();
+document.addEventListener("DOMContentLoaded", loadArticles);
 </script>
