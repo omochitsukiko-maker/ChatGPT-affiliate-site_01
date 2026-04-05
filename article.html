@@ -57,7 +57,17 @@ fetch("./articles.json")
   }
 
   document.getElementById("title").innerText = article.title;
-  document.getElementById("content").innerHTML = article.content;
+let content = article.content;
+
+// Markdownの簡易変換
+content = content
+  .replace(/^### (.*$)/gim, "<h3>$1</h3>")
+  .replace(/^## (.*$)/gim, "<h2>$1</h2>")
+  .replace(/\*\*(.*?)\*\*/gim, "<strong>$1</strong>")
+  .replace(/\n\n/g, "</p><p>");
+
+document.getElementById("content").innerHTML =
+  "<p>" + content + "</p>";
 });
 </script>
 
