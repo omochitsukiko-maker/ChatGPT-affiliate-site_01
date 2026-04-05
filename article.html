@@ -6,27 +6,26 @@
 <title>記事ページ</title>
 <style>
 body{
-  font-family:Arial,sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   background:#f5f7fa;
   margin:0;
 }
 .container{
-  max-width:800px;
+  max-width:850px;
   margin:30px auto;
-  background:#fff;
+  background:white;
   padding:30px;
-  border-radius:12px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  border-radius:14px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.08);
 }
-.cta{
+#content h2{
   margin-top:30px;
-  text-align:center;
 }
 .button{
   display:inline-block;
-  padding:14px 24px;
+  padding:14px 22px;
   background:#ff7043;
-  color:#fff;
+  color:white;
   text-decoration:none;
   border-radius:8px;
 }
@@ -38,21 +37,24 @@ body{
   <h1 id="title"></h1>
   <div id="content"></div>
 
-  <div class="cta">
-    <a class="button" href="あなたのアフィリエイトリンク">
-      無料で副業を始める
-    </a>
+  <div style="margin-top:40px; text-align:center;">
+    <a class="button" href="#">無料で副業を始める</a>
   </div>
 </div>
 
 <script>
 const params = new URLSearchParams(location.search);
-const id = params.get("id");
+const id = Number(params.get("id"));
 
 fetch("./articles.json")
 .then(res => res.json())
 .then(data => {
-  const article = data.find(a => a.id == id);
+  const article = data.find(a => a.id === id);
+
+  if (!article) {
+    document.getElementById("title").innerText = "記事が見つかりません";
+    return;
+  }
 
   document.getElementById("title").innerText = article.title;
   document.getElementById("content").innerHTML = article.content;
