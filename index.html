@@ -78,7 +78,7 @@ footer{
 </footer>
 
 <script>
-fetch("./articles.json")
+fetch("./articles.json?t=" + Date.now())
 .then(res => res.json())
 .then(data => {
   const container = document.getElementById("article-list");
